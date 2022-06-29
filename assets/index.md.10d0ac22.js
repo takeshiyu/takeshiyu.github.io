@@ -1,0 +1,1 @@
+import{_ as e}from"./plugin-vue_export-helper.21dcd24c.js";import{y as t,x as r}from"./framework.472658ae.js";const a='{"title":"莫忘初衷","description":"","frontmatter":{"title":"莫忘初衷","subtext":"為餘生踏出多一步"},"headers":[],"relativePath":"index.md","lastUpdated":1655974326814}';var d=e({},[["render",function(e,a,d,i,o,s){return r(),t("div")}]]);export{a as __pageData,d as default};
