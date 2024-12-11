@@ -4,6 +4,8 @@ title: Welcome
 
 # Kaze
 
+Hello World!!!
+
 Built with @LaravelZero, Kaze is a lightweight static site generator focused on providing the best writing experience:
 
 ✨ Three commands to rule them all
