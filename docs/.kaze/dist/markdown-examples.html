@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Examples</title>
+    <meta name="description" content="">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                'pre': {
+                                    backgroundColor: 'transparent',
+                                    padding: 0,
+                                    margin: '1.5rem 0',
+                                },
+                                'pre code': {
+                                    backgroundColor: 'transparent',
+                                    padding: '1.5rem',
+                                    borderRadius: '0.5rem',
+                                    color: 'inherit',
+                                },
+                                'code::before': { content: '""' },
+                                'code::after': { content: '""' },
+                            }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="bg-gray-50" x-data="{ sidebarOpen: false }">
+<nav class="bg-white shadow-sm border-b border-gray-200">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <a href="/" class="text-xl font-bold text-gray-800">
+                    My Documentation
+                </a>
+            </div>
+            <div class="flex items-center md:hidden">
+                <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 hover:text-gray-600">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="flex min-h-screen pt-16">
+    <aside class="w-64 bg-white border-r border-gray-200 fixed inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out"
+       :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}"
+       x-cloak
+       x-show="true">
+    <div class="h-full overflow-y-auto pt-16 md:pt-0">
+        <nav class="px-4 py-4">
+            
+                            <a href="/api-examples.html"
+                   class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md ">
+                    Api-Examples
+                </a>
+                            <a href="/index.html"
+                   class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md ">
+                    Index
+                </a>
+                            <a href="/markdown-examples.html"
+                   class="block py-2 px-4 text-gray-700 hover:bg-gray-100 rounded-md ">
+                    Markdown-Examples
+                </a>
+                    </nav>
+    </div>
+</aside>
+    
+    <main class="flex-1 ml-0 md:ml-64 transition-all duration-200">
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            
+            <div class="mb-8">
+                                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Markdown Examples</h1>
+                
+                <div class="flex items-center space-x-4 text-sm text-gray-600">
+                    
+                                    </div>
+            </div>
+
+            <article class="prose prose-slate max-w-none">
+                <h1>Markdown Examples</h1>
+<p>This page demonstrates various markdown syntaxes you can use in your documentation.</p>
+<h2>Headers</h2>
+<h1>H1</h1>
+<h2>H2</h2>
+<h3>H3</h3>
+<h2>Lists</h2>
+<ul>
+<li>Item 1</li>
+<li>Item 2
+<ul>
+<li>Nested item</li>
+<li>Another nested item</li>
+</ul>
+</li>
+<li>Item 3</li>
+</ul>
+<ol>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+</ol>
+<h2>Code Blocks</h2>
+<pre><code class="language-php">&lt;?php
+
+class Example {
+    public function hello() {
+        return &quot;Hello World!&quot;;
+    }
+}
+</code></pre>
+
+            </article>
+        </div>
+    </main>
+</div>
+
+
+<div x-show="sidebarOpen"
+     x-cloak
+     @click="sidebarOpen = false"
+     class="fixed inset-0 bg-gray-900/20 backdrop-blur-sm md:hidden"></div>
+
+
+<footer class="bg-white/80 border-t border-gray-200/80 py-4 mt-8 backdrop-blur-sm">
+    <div class="max-w-7xl mx-auto px-4 text-center text-gray-600">
+        Powered by <a href="https://github.com/your-repo/kaze" class="text-sky-600 hover:text-sky-700 transition-colors">Kaze</a>
+    </div>
+</footer>
+</body>
+</html>

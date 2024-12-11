@@ -1,0 +1,28 @@
+{
+    "name": "takeshi/takeshiyu.github.io",
+    "autoload": {
+        "psr-4": {
+            "Takeshi\\TakeshiyuGithubIo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Takeshi Yu",
+            "email": "hey@takeshiyu.me"
+        }
+    ],
+    "require": {
+         "takeshiyu/kaze": "dev-main"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/takeshiyu/kaze",
+            "options": {
+                "github-oauth": {
+                    "github.com": "${{ secrets.PAT }}"
+                }
+            }
+        }
+    ]
+}
