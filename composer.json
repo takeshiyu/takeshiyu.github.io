@@ -14,15 +14,10 @@
     "require": {
          "takeshiyu/kaze": "dev-main"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/takeshiyu/kaze",
-            "options": {
-                "github-oauth": {
-                    "github.com": "${{ secrets.PAT }}"
-                }
-            }
-        }
+    "repositories":[
+      {
+        "type": "vcs",
+        "url": "git@github.com:takeshiyu/kaze.git"
+      }
     ]
 }
