@@ -37,6 +37,9 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Configure Composer
+        run: composer config github-oauth.github.com ${{ secrets.PAT }}
+
       - name: Install dependencies
         run: |
           composer install
