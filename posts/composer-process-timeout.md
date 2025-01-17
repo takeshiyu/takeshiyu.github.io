@@ -124,7 +124,7 @@ Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 
 ```json
 "config": {
-    ...
+    // ...
     "process-timeout": 600
 },
 ```
@@ -142,4 +142,4 @@ docker push my/api
 
 ## 結論
 
-最終，選擇調整 Composer 的默認執行時間是一個比較簡單有效的解決方案。這次的經驗提示了在複雜的開發環境中，工具之間可能存在的隱藏交互影響。雖然 Composer 和 Docker 都是強大的工具，但它們的默認設定可能在某些情況下相互衝突。
+最終，選擇調整 Composer 的默認執行時間是一個比較簡單有效的解決方案。雖然 Composer 和 Docker 都是強大的工具，但它們的默認設定可能在某些情況下相互衝突。
