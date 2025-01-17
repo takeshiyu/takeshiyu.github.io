@@ -34,13 +34,13 @@ In Process.php line 1205:
 build [--dev] [--no-dev] [--] [<args>...]
 ```
 
-## <a href="#">#</a> Docker 有限制時間？
+## Docker 有限制時間？
 
 因為是在建立階段失敗，並不是在啟動階段，所以很直接懷疑是不是 `Docker` 本身有某種執行時間的限制？網路上確實有一些類似狀況的討論，但跟我遇到的錯誤都不太一樣，且如果可以透過設定來改善的話，[官方文件](https://docs.docker.com/get-started/) 應該會有詳盡的說明，但似乎也沒有任何的相關資訊。
 
 且限制 **300秒** 似乎不合理，假設有第三方廠商要產生自家的映像檔，例如：PHP8.3 等等，需要安裝的東西肯定比我多很多，**Docker 應該要可以根據需要，而進行長時間建立映像檔，只要過程中沒有報錯**。又或者，他們採用了什麼方式避免了這樣的狀況？使用了 [Multi-stage builds](https://docs.docker.com/build/building/multi-stage/) 嗎 ?
 
-## <a href="#">#</a> 多階段建構 ( Multi-stage builds )
+## 多階段建構 ( Multi-stage builds )
 
 採用多階段建構的方式，確實加快了建立的速度：
 
@@ -79,7 +79,7 @@ Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 
 所以是建立映像檔的過程中，因為 `composer` 安裝套件過久，所以導致失敗嗎？
 
-## <a href="#">#</a> Composer Process Timeout
+## Composer Process Timeout
 
 但是整個 Dockerfile 裡，唯一跟 composer 有關係的只有安裝 composer 命令：
 
@@ -118,7 +118,7 @@ Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 
 而每次執行 composer script 時，就會觸發 Composer 預設的 `process timeout`。如果建立映像檔過程比較久，就有可能會超過所限制的時間，這就是為什麼 docker build 過程中會出現超時的原因！
 
-## <a href="#">#</a> 解決方案
+## 解決方案
 
 解決的方式有兩種，一種是直接 [調整 composer 的時間限制](https://getcomposer.org/doc/articles/scripts.md#managing-the-process-timeout)，延長執行時間上限：
 
@@ -140,6 +140,6 @@ docker push my/api
 
 這樣就不再受到 Composer 執行時間的限制，也可以更靈活管理 Docker 建構過程。
 
-## <a href="#">#</a> 結論
+## 結論
 
 最終，選擇調整 Composer 的默認執行時間是一個比較簡單有效的解決方案。這次的經驗提示了在複雜的開發環境中，工具之間可能存在的隱藏交互影響。雖然 Composer 和 Docker 都是強大的工具，但它們的默認設定可能在某些情況下相互衝突。
