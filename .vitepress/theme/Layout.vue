@@ -10,8 +10,8 @@ const { page, frontmatter } = useData()
 </script>
 
 <template>
-  <div class="" flex flex-col>
-    <div class="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden">
+  <div class="flex flex-col min-h-screen justify-between">
+    <div class="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden flex-grow">
       <div
         class="absolute left-1/2 top-0 ml-[-38rem] h-[35rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)]">
         <div
