@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { useData } from 'vitepress'
 import { data as posts } from './posts.data.js'
 import Header from './Header.vue'
-const { page, frontmatter } = useData()
 </script>
 
 <template>
@@ -32,7 +30,7 @@ const { page, frontmatter } = useData()
                         <dl class="absolute left-0 top-0 lg:left-auto lg:right-full lg:mr-[calc(6.5rem+1px)]">
                             <dt class="sr-only">Date</dt>
                             <dd class="whitespace-nowrap text-sm leading-6 dark:text-zinc-400"><time
-                                    datetime="2024-11-21T18:30:00.000Z">{{ date.string }}</time></dd>
+                                    :datetime="date.string">{{ date.string }}</time></dd>
                         </dl>
                     </div>
                     <a class="flex items-center text-sm text-sky-500 font-medium" :href="url"><span
@@ -47,4 +45,5 @@ const { page, frontmatter } = useData()
             </div>
         </div>
     </main>
+
 </template>

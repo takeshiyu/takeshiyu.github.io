@@ -4,7 +4,7 @@ import { useData, useRoute } from 'vitepress'
 import { data as posts } from './posts.data.js'
 import Author from './Author.vue'
 
-const { frontmatter: data } = useData()
+const { frontmatter } = useData()
 
 const route = useRoute()
 
@@ -14,14 +14,12 @@ function findCurrentIndex() {
 
 // use the customData date which contains pre-resolved date info
 const date = computed(() => posts[findCurrentIndex()].date)
-const nextPost = computed(() => posts[findCurrentIndex() - 1])
-const prevPost = computed(() => posts[findCurrentIndex() + 1])
+// const nextPost = computed(() => posts[findCurrentIndex() - 1])
+// const prevPost = computed(() => posts[findCurrentIndex() + 1])
+
 </script>
 
-
 <template>
-    <!-- <Nav /> -->
-
     <div class="overflow-hidden">
         <div class="max-w-8xl mx-auto">
             <div class="flex px-4 pt-8 pb-10 lg:px-8"><a
@@ -38,7 +36,7 @@ const prevPost = computed(() => posts[findCurrentIndex() + 1])
                     <article class="relative pt-10">
                         <h1
                             class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200 md:text-3xl ">
-                            {{ data.title }}</h1>
+                            {{ frontmatter.title }}</h1>
                         <div class="text-sm leading-6">
                             <dl>
                                 <dt class="sr-only">Date</dt>

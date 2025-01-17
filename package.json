@@ -17,6 +17,7 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "markdown-it-attrs": "^4.3.1"
   }
 }
