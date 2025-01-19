@@ -13,7 +13,7 @@
                         class="font-medium  hover:text-emerald-600 text-emerald-400">Tailwind
                         UI - Protocol.</a>
                 </p>
-                <p class="text-zinc-500 text-sm/6">The experimental parts were made up by Takeshi.</p>
+                <p class="text-zinc-500 text-sm/6">The bad parts were made up by Takeshi.</p>
             </section>
         </div>
     </footer>
