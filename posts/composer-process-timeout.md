@@ -125,7 +125,7 @@ composer test   # 執行測試
 composer build  # 建立映像檔
 ```
 
-而每次執行 `composer script` 時，就會觸發 `composer` 預設的 `process timeout`。如果這個過程比較久，就有可能會超過所限制的時間，而導致建構失敗。
+而每次執行時，就會觸發 `composer` 預設的 `process timeout`。如果這個過程比較久，就有可能會超過所限制的時間，而導致建構失敗。
 
 ## 解決方案
 
