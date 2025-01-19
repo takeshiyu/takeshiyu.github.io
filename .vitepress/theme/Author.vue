@@ -16,7 +16,7 @@ const { frontmatter } = useData()
                     <div class="text-slate-900 dark:text-slate-200">{{ frontmatter.author }}</div>
                     <div class="mt-1">
                         <a :href="'https://twitter.com/' + frontmatter.twitter" target="_blank"
-                            rel="noopnener noreferrer" class="text-sky-500 hover:text-sky-600 dark:text-sky-400">{{
+                            rel="noopnener noreferrer" class=" hover:text-emerald-600 text-emerald-400">{{
                                 frontmatter.twitter }}</a>
                     </div>
                 </div>

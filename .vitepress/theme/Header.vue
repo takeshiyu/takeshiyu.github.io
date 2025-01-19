@@ -6,14 +6,14 @@ const { frontmatter } = useData()
 
 <template>
     <header class="py-16 sm:text-center">
-        <h1 class="mb-4 text-3xl sm:text-4xl tracking-tight text-zinc-900 font-extrabold dark:text-zinc-200">{{
+        <h1 class="mb-4 text-3xl sm:text-4xl tracking-tight font-extrabold text-zinc-200">{{
             frontmatter.title }}</h1>
-        <p class="text-lg text-zinc-700 dark:text-zinc-400">{{
+        <p class="text-lg text-zinc-400">{{
             frontmatter.description }}</p>
         <section class="mt-3 max-w-sm sm:mx-auto sm:px-4">
             <div class="mt-7 flex md:justify-center justify-start gap-x-10">
-                <a href="https://www.instagram.com/takeshi.tw/" class="text-gray-400 hover:text-sky-300" target="_blank"
-                    rel="noopnener noreferrer">
+                <a href="https://www.instagram.com/takeshi.tw/" class="text-gray-400 hover:text-emerald-300"
+                    target="_blank" rel="noopnener noreferrer">
                     <span class="sr-only">Instagram</span>
                     <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill-rule="evenodd"
@@ -21,7 +21,7 @@ const { frontmatter } = useData()
                             clip-rule="evenodd" />
                     </svg>
                 </a>
-                <a href="https://x.com/takeshi_hey/" class="text-gray-400 hover:text-sky-300" target="_blank"
+                <a href="https://x.com/takeshi_hey/" class="text-gray-400 hover:text-emerald-300" target="_blank"
                     rel="noopnener noreferrer">
                     <span class="sr-only">X</span>
                     <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -29,7 +29,7 @@ const { frontmatter } = useData()
                             d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5685 21H20.8131L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z" />
                     </svg>
                 </a>
-                <a href="https://github.com/takeshiyu/" class="text-gray-400 hover:text-sky-400" target="_blank"
+                <a href="https://github.com/takeshiyu/" class="text-gray-400 hover:text-emerald-400" target="_blank"
                     rel="noopnener noreferrer">
                     <span class="sr-only">GitHub</span>
                     <svg class="size-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
