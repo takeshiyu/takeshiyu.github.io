@@ -36,7 +36,7 @@ build [--dev] [--no-dev] [--] [<args>...]
 
 ## Docker 有限制建構時間？
 
-因為是在建立映像檔時失敗，並不是在啟動階段，因此懷疑是否 `Docker` 本身有某種執行時間的限制？網路上確實有一些類似狀況的討論，但錯誤都不太一樣，且如果可以透過設定來改善的話，[官方文件](https://docs.docker.com/get-started/) 應該會有詳盡的說明？但似乎也沒有任何的相關資訊。
+因為是在建立映像檔時失敗，並不是在啟動階段，因此懷疑是否 Docker 本身有某種執行時間的限制？網路上確實有一些類似狀況的討論，但錯誤都不太一樣，且如果可以透過設定來改善的話，[官方文件](https://docs.docker.com/get-started/) 應該會有詳盡的說明？但似乎也沒有任何的相關資訊。
 
 限制 **300秒** 似乎不合理，假設有第三方廠商要產生自己的映像檔，例如：PHP8.3 等等，需要安裝的東西肯定比我多很多？**Docker 應該可以根據需要，而進行長時間建立映像檔，只要過程中沒有出現錯誤**。又或者，需要採用什麼方式避免這樣的狀況？使用 [多階段建構 ( Multi-stage builds )](https://docs.docker.com/build/building/multi-stage/) 嗎 ?
 
@@ -78,11 +78,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 ```
 
-所以是建立映像檔的過程中，因為 `composer` 安裝套件過久，所以導致失敗嗎？
+所以是建立映像檔的過程中，因為 Composer 安裝套件過久，所以導致失敗嗎？
 
 ## Composer Process Timeout
 
-但是整個 Dockerfile 裡，唯一跟 composer 有關係的只有安裝 composer 命令：
+但是整個 Dockerfile 裡，唯一跟 Composer 有關係的只有安裝 Composer 命令：
 
 ```shell
 && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
@@ -117,7 +117,7 @@ Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 ]
 ```
 
-可以這麼執行，方便執行命令：
+方便執行命令：
 
 ```shell
 composer lint   # 格式化
@@ -125,11 +125,11 @@ composer test   # 執行測試
 composer build  # 建立映像檔
 ```
 
-而每次執行時，就會觸發 `composer` 預設的 `process timeout`。如果這個過程比較久，就有可能會超過所限制的時間，而導致建構失敗。
+而每次執行時，都會遵守預設的 `process timeout` 時間。如果這個過程比較久，就有可能會超過所限制的時間，而導致建構失敗。
 
 ## 解決方案
 
-解決的方式有兩種，一種是直接 [調整 composer 的時間限制](https://getcomposer.org/doc/articles/scripts.md#managing-the-process-timeout)，延長執行時間上限：
+可能的解決方式有兩種，一種是直接 [調整 Composer 的時間限制](https://getcomposer.org/doc/articles/scripts.md#managing-the-process-timeout)，延長執行時間上限：
 
 ```json
 "config": {
@@ -147,8 +147,6 @@ docker tag my/api my/api
 docker push my/api
 ```
 
-這樣就不再受到 `composer` 執行時間的限制，也可以更靈活管理映像檔建構過程。
+這樣就不再受到 Composer 執行時間的限制，也可以更靈活管理映像檔建構過程。
 
-## 結論
-
-最終，選擇調整 `composer` 的默認執行時間是一個比較簡單有效的解決方案。雖然 Composer 和 Docker 都是強大的工具，但它們的默認設定可能在某些情況下相互衝突。
+最終，選擇調整 Composer 的默認執行時間是一個比較簡單有效的解決方案，符合日常的開發習慣。
