@@ -1,24 +1,26 @@
 ---
-title: '一個意外的 Composer Process Timeout 設定'
+title: "That Time Composer's Timeout Drove Me Nuts"
 date: 2024-09-30
 author: Takeshi Yu
 gravatar: 3075c9103f3dddee28d255b45df7bfc4c58459e182f8c600a07930856e97dc39
 twitter: '@takeshi_hey'
 ---
 
-使用 Docker 部署 Laravel 的過程裡，經常出現執行超過時間上限而導致失敗的狀況。主要步驟包括：
-
-1. 安裝 [PHP8.3](https://www.php.net/releases/8.3/en.php)，以及必要的模組套件
-2. 透過 [PECL](https://pecl.php.net) 安裝 [MongoDB 驅動與模組](https://www.mongodb.com/docs/drivers/php-drivers/)
-3. 安裝 [Caddy Server](https://caddyserver.com)
-4. 安裝 [Supervisor](http://supervisord.org)
-5. 複製檔案、設定相關服務等等
-
-最後將映像檔部署到 [Linode](https://www.linode.com) 上運行，需要安裝與設定的部分並沒有比較特殊，除了需要額外安裝、編譯 [MongoDB](https://www.mongodb.com/)。
+You know what's frustrating? Spending hours debugging what seems like a simple Docker build issue, only to find out it's something completely unexpected. That's exactly what happened to me recently while working on a Laravel deployment.
 
 ---
 
-但是過程頻繁的在 300 秒後失敗：
+Pretty standard stuff - I was building a Docker image for a Laravel app that needed to run on Linode. Nothing fancy, just your typical setup:
+
+* [PHP8.3](https://www.php.net/releases/8.3/en.php) with all the usual suspects.
+* Setting up [MongoDB](https://www.mongodb.com/docs/drivers/php-drivers/) drivers and extensions via [PECL](https://pecl.php.net).
+* Installing [Caddy Server](https://caddyserver.com).
+* [Supervisor](http://supervisord.org) to keep processes in check.
+* Copying files and configuring related services.
+
+## The Problem
+
+Everything seemed fine until the build kept failing at exactly **300 seconds**. Like clockwork. Here's what I was seeing:
 
 ```dockerfile
 => CANCELED exporting to image                                                                                       37.6s
@@ -34,15 +36,13 @@ In Process.php line 1205:
 build [--dev] [--no-dev] [--] [<args>...]
 ```
 
-## Docker 有限制建構時間？
+## The Head-Scratching Begins
 
-因為是在建立映像檔時失敗，並不是在啟動階段，因此懷疑是否 Docker 本身有某種執行時間的限制？網路上確實有一些類似狀況的討論，但錯誤都不太一樣，且如果可以透過設定來改善的話，[官方文件](https://docs.docker.com/get-started/) 應該會有詳盡的說明？但似乎也沒有任何的相關資訊。
+My first thought? "Oh great, Docker's being Docker again." You know how it goes - you immediately blame the most obvious suspect. I spent a good chunk of time diving into [Docker's  documentation](https://docs.docker.com/get-started/), looking for some mysterious build timeout setting that I must have missed. But something didn't add up. Many official images take way longer than **300 seconds** to build, and they work just fine. Plus, if Docker had a built-in timeout, wouldn't it be, I don't know, documented somewhere?
 
-限制 **300秒** 似乎不合理，假設有第三方廠商要產生自己的映像檔，例如：PHP8.3 等等，需要安裝的東西肯定比我多很多？**Docker 應該可以根據需要，而進行長時間建立映像檔，只要過程中沒有出現錯誤**。又或者，需要採用什麼方式避免這樣的狀況？使用 [多階段建構 ( Multi-stage builds )](https://docs.docker.com/build/building/multi-stage/) 嗎 ?
+## The Plot Thickens
 
-## 多階段建構 ( Multi-stage builds )
-
-採用多階段建構的方式，確實加快了建立的速度：
+Being a good developer (or at least trying to be), I figured I'd try to optimize my build with [multi-stage builds]((https://docs.docker.com/build/building/multi-stage/)). Here's what I came up with:
 
 ```dockerfile
 FROM php:8.3-fpm AS mongodb-builder
@@ -72,27 +72,23 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # ...
 ```
 
-但問題並沒有完全解決，還是有機會發生。再次確認失敗錯誤訊息後，發現了這一行：
+Did it fix the problem? Nope. But it did make my Dockerfile look prettier, so there's that.
+
+## The Lightbulb Moment
+
+Then I noticed something in the error message that I'd glossed over before:
 
 ```shell
 Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 ```
 
-所以是建立映像檔的過程中，因為 Composer 安裝套件過久，所以導致失敗嗎？
-
-## Composer Process Timeout
-
-但是整個 Dockerfile 裡，唯一跟 Composer 有關係的只有安裝 Composer 命令：
+Composer? But I'm just installing Composer in my Dockerfile:
 
 ```shell
 && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
 ```
 
-如果是這一行導致錯誤，應該不可能出現 `composer process timeout`，因為並沒有執行 `composer install`，也沒有進行任何與 PHP 套件下載有關的操作。所以應該不是 Dockerfile 裡的命令造成的結果。後來，重複看了 [composer process timeout](https://getcomposer.org/doc/06-config.md#process-timeout)：
-
-> The timeout in seconds for process executions, defaults to 300 (5mins). The duration processes like git clones can run before Composer assumes they died out. You may need to make this higher if you have a slow connection or huge vendors.
-
-忽然想到， `composer.json` 中有定義了一些 `script`，像是執行測試、格式化檔案、建立映像檔等等：
+That's when it hit me. I had these neat little shortcuts in my `composer.json`:
 
 ```json
 "lint": "pint",
@@ -117,19 +113,13 @@ Check https://getcomposer.org/doc/06-config.md#process-timeout for details
 ]
 ```
 
-方便執行命令：
+And I was running my Docker builds through Composer with `composer build`. Guess what has a **300-second** default timeout? Yep, Composer.
 
-```shell
-composer lint   # 格式化
-composer test   # 執行測試
-composer build  # 建立映像檔
-```
+## The Fix
 
-而每次執行時，都會遵守預設的 `process timeout` 時間。如果這個過程比較久，就有可能會超過所限制的時間，而導致建構失敗。
+The solution was embarrassingly simple. Either:
 
-## 解決方案
-
-可能的解決方式有兩種，一種是直接 [調整 Composer 的時間限制](https://getcomposer.org/doc/articles/scripts.md#managing-the-process-timeout)，延長執行時間上限：
+1. Tell Composer to chill out a bit:
 
 ```json
 "config": {
@@ -137,7 +127,8 @@ composer build  # 建立映像檔
     "process-timeout": 600
 },
 ```
-另一種就是把建立映像檔的命令分離出來：
+
+2. Or move the Docker commands to a shell script where Composer can't boss them around:
 
 ```shell
 #!/bin/bash
@@ -147,6 +138,10 @@ docker tag my/api my/api
 docker push my/api
 ```
 
-這樣就不再受到 Composer 執行時間的限制，也可以更靈活管理映像檔建構過程。
+I went with option 1 because I was too lazy to update all my deployment scripts.
 
-最終，選擇調整 Composer 的默認執行時間，相對比較簡單，也符合日常的開發習慣。
+## The Lesson
+
+Sometimes the problem isn't where you think it is. I spent way too long looking at Docker documentation when the answer was right there in the error message. Also, maybe running everything through Composer scripts isn't always the best idea - but that's a problem for future me.
+
+Next time you hit a weird timeout, check your Composer config. It might just save you a few hours of Docker documentation diving.

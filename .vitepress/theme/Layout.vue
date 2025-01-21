@@ -13,7 +13,7 @@ const { page, frontmatter } = useData()
   <div class="flex flex-col min-h-screen justify-between">
     <div class="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden flex-grow">
       <div
-        class="absolute left-1/2 top-0 ml-[-38rem] h-[35rem] w-[81.25rem] [mask-image:linear-gradient(white,transparent)]">
+        class="absolute left-1/2 top-0 ml-[-38rem] h-[45rem] w-[81.25rem] [mask-image:linear-gradient(white,transparent)]">
         <div
           class="absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] from-[#36b49f]/30 to-[#DBFF75]/30 opacity-100">
           <div
