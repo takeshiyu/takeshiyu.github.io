@@ -42,7 +42,7 @@ My first thought? "Oh great, Docker's being Docker again." You know how it goes 
 
 ## The Plot Thickens
 
-Being a good developer (or at least trying to be), I figured I'd try to optimize my build with [multi-stage builds]((https://docs.docker.com/build/building/multi-stage/)). Here's what I came up with:
+Being a good developer (or at least trying to be), I figured I'd try to optimize my build with [multi-stage builds](https://docs.docker.com/build/building/multi-stage/). Here's what I came up with:
 
 ```dockerfile
 FROM php:8.3-fpm AS mongodb-builder
