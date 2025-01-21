@@ -119,7 +119,7 @@ And I was running my Docker builds through Composer with `composer build`. Guess
 
 The solution was embarrassingly simple. Either:
 
-1. Tell Composer to chill out a bit:
+1. Tell Composer to chill out a bit ([ managing the process timeout ](https://getcomposer.org/doc/articles/scripts.md#managing-the-process-timeout)):
 
 ```json
 "config": {
