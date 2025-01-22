@@ -107,8 +107,8 @@ $item1 = Item::find(1);  // price: "99.99"
 $item2 = Item::find(2);  // price: "149.99"
 
 // Using BCMath functions
-$subtotal = bcadd($item1->price, $item2->price, 2);
-$tax = bcmul($subtotal, $item2->tax, 2);
+$subtotal = bcadd($item1->price, $item2->price, 3);
+$tax = bcmul($subtotal, $item2->tax, 3);
 
 var_dump($tax);  // Precisely outputs: string(5) "12.499"
 ```
@@ -117,11 +117,11 @@ However, when calculations become more complex, the code becomes harder to read 
 
 ```php
 // Complex order calculation
-$subtotal = bcmul($item1->price, $item1->quantity, 2);  // Calculate quantity
-$discount = bcmul($subtotal, $item1->discount, 2);      // 10% discount
-$afterDiscount = bcsub($subtotal, $discount, 2);        // Apply discount
-$tax = bcmul($afterDiscount, $item1->tax, 2);           // Add 5% tax
-$total = bcadd($afterDiscount, $tax, 2);                // Final amount
+$subtotal = bcmul($item1->price, $item1->quantity, 3);  // Calculate quantity
+$discount = bcmul($subtotal, $item1->discount, 3);      // 10% discount
+$afterDiscount = bcsub($subtotal, $discount, 3);        // Apply discount
+$tax = bcmul($afterDiscount, $item1->tax, 3);           // Add 5% tax
+$total = bcadd($afterDiscount, $tax, 3);                // Final amount
 ```
 
 ## PHP 8.4's BCMath Object API
