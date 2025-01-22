@@ -1,6 +1,6 @@
 ---
 title: "Handling Decimal Calculations in PHP 8.4 with the New BCMath Object API"
-date: 2024-12-01
+date: 2025-01-22
 author: Takeshi Yu
 gravatar: 3075c9103f3dddee28d255b45df7bfc4c58459e182f8c600a07930856e97dc39
 twitter: '@takeshi_hey'
