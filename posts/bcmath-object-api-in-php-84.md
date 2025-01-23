@@ -154,7 +154,7 @@ Key benefits of the new API:
 * Immutable objects ensuring value safety
 * Implementation of the Stringable interface
 
-One important consideration when using `BCMath\Number` is to always pass values as `STRING` - if you pass a `FLOAT`, it will be converted to an `INTEGER` (e.g., 0.1 becomes 0), leading to precision loss. This is especially critical when handling decimal calculations:
+One important consideration when using `BCMath\Number` is to always pass values as `STRING` - if you pass a `FLOAT`, it will be converted to an `INTEGER`, leading to precision loss. This is especially critical when handling decimal calculations:
 
 ```php
 $num = new Number(0.1);    // Output: "0"
