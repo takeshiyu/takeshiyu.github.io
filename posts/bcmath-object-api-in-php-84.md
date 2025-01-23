@@ -126,7 +126,14 @@ $total = bcadd($afterDiscount, $tax, 3);                // Final amount
 
 ## PHP 8.4's BCMath Object API
 
-[PHP 8.4](https://www.php.net/releases/8.4/en.php) introduces a new [object-oriented API for BCMath](https://wiki.php.net/rfc/support_object_type_in_bcmath), making precise calculations both elegant and intuitive:
+[PHP 8.4](https://www.php.net/releases/8.4/en.php) introduces a new [object-oriented API for BCMath](https://wiki.php.net/rfc/support_object_type_in_bcmath), making precise calculations both elegant and intuitive. When using `BCMath\Number`, values must be passed as `strings` to maintain precision - any `float` values will be converted to `integers`, leading to precision loss:
+
+```php
+$num = new Number(3.5);    // Output: "3"
+$num = new Number('4.1');  // Output: "4.1"
+```
+
+This is why we properly configure our database columns as `DECIMAL` and ensure proper [PHP PDO](https://www.php.net/manual/en/book.pdo.php) settings or explicit casting - to maintain string representation of decimal values. Here's how we use the new API to perform precise calculations:
 
 ```php
 use BCMath\Number;
@@ -153,13 +160,6 @@ Key benefits of the new API:
 * Support for standard mathematical operators
 * Immutable objects ensuring value safety
 * Implementation of the Stringable interface
-
-One important consideration when using `BCMath\Number` is to always pass values as `STRING` - if you pass a `FLOAT`, it will be converted to an `INTEGER`, leading to precision loss. This is especially critical when handling decimal calculations:
-
-```php
-$num = new Number(0.1);    // Output: "0"
-$num = new Number('0.1');  // Output: "0.1"
-```
 
 ## Elegant Integration with Laravel
 
