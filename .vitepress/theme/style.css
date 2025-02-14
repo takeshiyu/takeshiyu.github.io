@@ -7,7 +7,7 @@ html {
 
 body {
   min-height: 100%;
-  @apply antialiased min-h-full bg-white dark:bg-zinc-900 relative min-h-screen;
+  @apply antialiased min-h-full bg-zinc-900 relative min-h-screen;
 }
 
 button.copy {
@@ -28,6 +28,12 @@ abbr[title] {
 
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply dark:bg-black;
+  }
+}
 
 .scrollbar-none {
   scrollbar-width: none;
