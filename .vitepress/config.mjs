@@ -6,7 +6,7 @@ export default defineConfig({
   description: "Just simple folk, with HTML, trying to make a living",
   cleanUrls: true,
   markdown: {
-    theme: 'slack-dark'
+    theme: 'kanagawa-wave'
   },
   head: process.env.NODE_ENV === 'production'
     ? [
