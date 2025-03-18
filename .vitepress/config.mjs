@@ -7,15 +7,15 @@ export default defineConfig({
   cleanUrls: true,
   markdown: {
     theme: 'kanagawa-wave'
-  },
-  head: process.env.NODE_ENV === 'production'
-    ? [
-      [
-        'script',
-        {
-          src: 'https://cdn.usefathom.com/script.js', 'data-site': 'HYVQUQMB',
-          defer: true
-        }
-      ]
-    ] : []
+  }
+  // head: process.env.NODE_ENV === 'production'
+  //   ? [
+  //     [
+  //       'script',
+  //       {
+  //         src: 'https://cdn.usefathom.com/script.js', 'data-site': 'HYVQUQMB',
+  //         defer: true
+  //       }
+  //     ]
+  //   ] : []
 })
