@@ -176,7 +176,7 @@ And all link information is centralized in a single JSON file:
     "projects": {
         "/Users/foo/dev/work/demo": {
             "linked_packages": {
-                "Foo/Hello": "/Users/foo/dev/work/hello"
+                "foo/hello": "/Users/foo/dev/work/hello"
             }
         }
     }
@@ -197,7 +197,6 @@ composer linked --all
 ```
 
 Unlink a package:
-
 
 ```bash
 composer unlink vendor/my-package
