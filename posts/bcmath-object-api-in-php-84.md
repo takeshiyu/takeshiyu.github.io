@@ -160,7 +160,10 @@ Key benefits of the new API:
 * Support for standard mathematical operators
 * Immutable objects ensuring value safety
 * Implementation of the Stringable interface
-* Automatic scale determination: Unlike traditional BCMath functions, `BcMath\Number` does not respect the global `bcmath.scale` INI setting. Instead, it automatically determines the scale (decimal places) based on the operation performed.
+
+One important behavior change to keep in mind is the automatic scale determination. Unlike traditional `BCMath` functions, `BCMath\Number` does not respect the global `bcmath.scale` INI setting. Instead, it automatically determines the scale (decimal places) based on the operation performed.
+
+It's also important to understand that database fields defined with a fixed scale will automatically round values exceeding that scale. For instance, if your column is defined as `DECIMAL(7, 4)` and you insert `12.12345`, the stored value will become `12.1235`.
 
 ## Elegant Integration with Laravel
 
