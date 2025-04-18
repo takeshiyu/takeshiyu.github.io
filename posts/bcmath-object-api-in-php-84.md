@@ -138,11 +138,11 @@ This is why we properly configure our database columns as `DECIMAL` and ensure p
 ```php
 use BCMath\Number;
 
-$item1 = Item::find(1);
-$price = new Number($item1->price);            // price: "99.99"
-$quantity = new Number($item1->quantity);      // quantity: "2"
-$discountRate = new Number($item1->discount);  // 10% discount
-$taxRate = new Number($item1->tax);            // 5% tax
+$item = Item::find(1);
+$price = new Number($item->price);            // price: "99.99"
+$quantity = new Number($item->quantity);      // quantity: "2"
+$discountRate = new Number($item->discount);  // 10% discount
+$taxRate = new Number($item->tax);            // 5% tax
 
 // Calculations become natural and readable
 $subtotal = $price * $quantity;
@@ -207,21 +207,34 @@ class Item extends Model
 Or with a [custom cast](https://laravel.com/docs/master/eloquent-mutators#custom-casts):
 
 ```php
-use BCMath\Number;
+use BcMath\Number;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
 
-class DecimalCast implements CastsAttributes
+class AsDecimal implements CastsAttributes
 {
-    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
+    /**
+     * Cast the given value.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public function get(Model $model, string $key, mixed $value, array $attributes): Number
     {
+        $value = blank($value) ? '0' : $value;
+
         return new Number($value);
     }
 
-    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
+    /**
+     * Prepare the given value for storage.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public function set(Model $model, string $key, mixed $value, array $attributes): string
     {
-        if ($value instanceof Number) {
-            return (string) $value;
-        }
-        return (string) new Number($value);
+        $number = $value instanceof Number ? $value : new Number(blank($value) ? '0' : $value);
+
+        return (string) $number;
     }
 }
 ```
@@ -232,10 +245,10 @@ class Item extends Model
     protected function casts(): array
     {
         return [
-            'quantity' => DecimalCast::class,
-            'price' => DecimalCast::class,
-            'discount' => DecimalCast::class,
-            'tax' => DecimalCast::class,
+            'quantity' => AsDecimal::class,
+            'price' => AsDecimal::class,
+            'discount' => AsDecimal::class,
+            'tax' => AsDecimal::class,
         ];
     }
 }
@@ -244,12 +257,12 @@ class Item extends Model
 Then:
 
 ```php
-$item1 = Item::find(1);
+$item = Item::find(1);
 
-$subtotal = $item1->price * $item1->quantity;
-$discount = $subtotal * $item1->discount;
+$subtotal = $item->price * $item->quantity;
+$discount = $subtotal * $item->discount;
 $afterDiscount = $subtotal - $discount;
-$tax = $afterDiscount * $item1->tax;
+$tax = $afterDiscount * $item->tax;
 $total = $afterDiscount + $tax;
 ```
 
