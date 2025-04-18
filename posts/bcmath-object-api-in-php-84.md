@@ -242,6 +242,11 @@ class AsDecimal implements CastsAttributes
 ```php
 class Item extends Model
 {
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
