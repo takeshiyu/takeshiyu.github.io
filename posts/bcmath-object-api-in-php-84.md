@@ -1,9 +1,38 @@
 ---
 title: "Handling Decimal Calculations in PHP 8.4: Integrating BCMath Object API with Laravel"
+description: "Explore PHP 8.4's new BCMath Object API and learn how to integrate it with Laravel to perform accurate, maintainable decimal calculations—perfect for finance and inventory systems."
 date: 2025-01-22
 author: Takeshi Yu
 gravatar: 3075c9103f3dddee28d255b45df7bfc4c58459e182f8c600a07930856e97dc39
 twitter: '@takeshi_hey'
+head:
+  - - meta
+    - property: og:title
+      content: "Handling Decimal Calculations in PHP 8.4: Integrating BCMath Object API with Laravel"
+  - - meta
+    - property: og:description
+      content: "Explore PHP 8.4's new BCMath Object API and learn how to integrate it with Laravel to perform accurate, maintainable decimal calculations—perfect for finance and inventory systems."
+  - - meta
+    - property: og:url
+      content: "https://takeshiyu.me/posts/bcmath-object-api-in-php-84"
+  - - meta
+    - property: og:type
+      content: "article"
+  - - meta
+    - name: twitter:site
+      content: "@takeshi_hey"
+  - - meta
+    - name: twitter:card
+      content: summary_large_image
+  - - meta
+    - name: twitter:title
+      content: "Handling Decimal Calculations in PHP 8.4 with Laravel"
+  - - meta
+    - name: twitter:description
+      content: "Explore PHP 8.4's new BCMath Object API and learn how to integrate it with Laravel to perform accurate, maintainable decimal calculations—perfect for finance and inventory systems."
+  - - link
+    - rel: canonical
+      href: "https://takeshiyu.me/posts/bcmath-object-api-in-php-84"
 ---
 
 When developing enterprise applications, particularly those handling financial transactions, accounting systems, or inventory management, precise numerical calculations are non-negotiable. A small rounding error could lead to significant discrepancies and debugging nightmares. Let's dive into how PHP 8.4's new BCMath Object API makes handling these calculations both precise and elegant.
