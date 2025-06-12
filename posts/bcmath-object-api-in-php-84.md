@@ -19,6 +19,12 @@ head:
     - property: og:type
       content: "article"
   - - meta
+    - property: og:image
+      content: "/images/php84_decimal.png"
+  - - meta
+    - name: twitter:image
+      content: "/images/php84_decimal.png"
+  - - meta
     - name: twitter:site
       content: "@takeshi_hey"
   - - meta
@@ -34,6 +40,8 @@ head:
     - rel: canonical
       href: "https://takeshiyu.me/posts/bcmath-object-api-in-php-84"
 ---
+
+<img src="/images/php84_decimal.png">
 
 When developing enterprise applications, particularly those handling financial transactions, accounting systems, or inventory management, precise numerical calculations are non-negotiable. A small rounding error could lead to significant discrepancies and debugging nightmares. Let's dive into how PHP 8.4's new BCMath Object API makes handling these calculations both precise and elegant.
 
